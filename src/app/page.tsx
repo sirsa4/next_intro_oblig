@@ -1,3 +1,29 @@
+"use client"
+
+import { useEffect, useState } from "react"
+
+import { UserType } from "@/lib/type"
+import Users from "@/components/Users"
+
 export default function Home() {
-  return <div>Kode her</div>
+  const [users, setUsers] = useState<UserType | []>([])
+  const getUsers = async () => {
+    const users = await fetch("http://localhost:3000/api/users")
+    const result = await users.json()
+    setUsers(result.users)
+    //console.log(result)
+  }
+  useEffect(() => {
+    getUsers()
+  }, [])
+  return (
+    <div className="container">
+      <h1>Users</h1>
+      {
+        users?.map((user: UserType)=>{
+          return <Users key={user.email} {...user} />
+        })
+      }
+    </div>
+  )
 }

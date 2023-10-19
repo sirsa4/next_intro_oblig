@@ -13,7 +13,7 @@ export const createUserSchema = z.object({
 export const GET = async () => {
   try {
     const users = await prisma.user.findMany()
-    console.log(users);
+   // console.log(users);
     return NextResponse.json({ users, status: 200 })
   } catch (error) {
     console.log(error)
