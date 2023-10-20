@@ -1,6 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse, type NextRequest } from "next/server";
 
+type ParamsType = {
+    prams: {id: string}
+}
+
 export const GET = async(request: NextRequest, {params}:{params: {id: string} })=>{
     console.log(params.id);
     
@@ -16,3 +20,12 @@ export const GET = async(request: NextRequest, {params}:{params: {id: string} })
         console.error(error)
     }
 } 
+
+export const DELETE = async(request: NextRequest, {params}: {params:{id: string}})=>{
+    const deletedUser = await prisma.user.delete({
+        where: {
+            id: parseInt(params.id)
+        }
+    })
+    return NextResponse.json(deletedUser);
+}
